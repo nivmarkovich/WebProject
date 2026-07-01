@@ -54,7 +54,6 @@ npx tsx scripts/seed.ts
 ### 5. גישה
 - 🌐 **אפליקציה**: http://localhost:3000
 - 🔐 **שרת אימות**: http://localhost:4000
-- 👤 **כניסת מנהל**: שם: `micha`, סיסמה: `1234`
 
 ## 📱 דפי האפליקציה
 
@@ -77,13 +76,6 @@ npx tsx scripts/seed.ts
 - **אימות**: JWT (access + refresh tokens), HttpOnly cookies
 - **שפה**: TypeScript מלא, UI בעברית (RTL)
 
-## 📋 פרטי מנהל לבוחן
 
-```
-שם משתמש: micha
-סיסמה:    1234
-```
-
----
 
 © 2026 LoRa Defi — פרויקט גמר אקדמי | **זהו סימולטור בלבד. במקרה חירום — חייגו 101**
