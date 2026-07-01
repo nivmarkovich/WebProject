@@ -44,15 +44,15 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     // Generate tokens
     const accessToken = jwt.sign(
       { sub: admin.id, username: admin.username, role: 'admin' },
-      config.accessTokenSecret,
-      { expiresIn: config.accessTokenExpiry }
+      config.accessTokenSecret as string,
+      { expiresIn: config.accessTokenExpiry as any }
     );
 
     const jti = uuidv4();
     const refreshToken = jwt.sign(
       { sub: admin.id, jti },
-      config.refreshTokenSecret,
-      { expiresIn: config.refreshTokenExpiry }
+      config.refreshTokenSecret as string,
+      { expiresIn: config.refreshTokenExpiry as any }
     );
 
     // Store refresh token in DB
@@ -99,7 +99,7 @@ router.post('/refresh', async (req: Request, res: Response): Promise<void> => {
     // Verify the refresh token
     let decoded: { sub: number; jti: string };
     try {
-      decoded = jwt.verify(refreshToken, config.refreshTokenSecret) as {
+      decoded = jwt.verify(refreshToken, config.refreshTokenSecret as string) as unknown as {
         sub: number;
         jti: string;
       };
@@ -141,15 +141,15 @@ router.post('/refresh', async (req: Request, res: Response): Promise<void> => {
     // Issue new tokens
     const newAccessToken = jwt.sign(
       { sub: admin.id, username: admin.username, role: 'admin' },
-      config.accessTokenSecret,
-      { expiresIn: config.accessTokenExpiry }
+      config.accessTokenSecret as string,
+      { expiresIn: config.accessTokenExpiry as any }
     );
 
     const newJti = uuidv4();
     const newRefreshToken = jwt.sign(
       { sub: admin.id, jti: newJti },
-      config.refreshTokenSecret,
-      { expiresIn: config.refreshTokenExpiry }
+      config.refreshTokenSecret as string,
+      { expiresIn: config.refreshTokenExpiry as any }
     );
 
     // Store new refresh token
@@ -190,7 +190,7 @@ router.post('/logout', async (req: Request, res: Response): Promise<void> => {
 
     if (refreshToken) {
       try {
-        const decoded = jwt.verify(refreshToken, config.refreshTokenSecret) as {
+        const decoded = jwt.verify(refreshToken, config.refreshTokenSecret as string) as unknown as {
           jti: string;
         };
         // Revoke the token

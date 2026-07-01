@@ -23,7 +23,7 @@ export function validateAccessToken(
   const token = authHeader.split(' ')[1];
 
   try {
-    const decoded = jwt.verify(token, config.accessTokenSecret) as {
+    const decoded = jwt.verify(token, config.accessTokenSecret as string) as unknown as {
       sub: number;
       username: string;
       role: string;
