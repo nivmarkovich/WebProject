@@ -1,0 +1,7 @@
+# Root .gitignore
+node_modules/
+dist/
+.env
+.env.local
+.next/
+*.log
