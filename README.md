@@ -52,8 +52,8 @@ npx tsx scripts/seed.ts
 ```
 
 ### 5. גישה
-- 🌐 **אפליקציה**: http://localhost:3000
-- 🔐 **שרת אימות**: http://localhost:4000
+- 🌐 **אפליקציה**: https://web-project-psi-eight.vercel.app/
+- 🔐 **שרת אימות**: https://webproject-cz1s.onrender.com
 
 ## 📱 דפי האפליקציה
 
