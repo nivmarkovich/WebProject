@@ -11,8 +11,17 @@ const app = express();
 // ===========================================
 // Middleware
 // ===========================================
+const allowedOrigins = config.corsOrigin.split(',').map(o => o.trim());
 app.use(cors({
-  origin: config.corsOrigin,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,  // Required for cookies
 }));
 app.use(express.json());

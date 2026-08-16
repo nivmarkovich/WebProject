@@ -7,6 +7,7 @@ export default function AdminLoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [warning, setWarning] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -14,6 +15,11 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setWarning('');
+
+    const wakeupTimeout = setTimeout(() => {
+      setWarning('השרת מתעורר משינה, זה עשוי לקחת כדקה, אנא המתן...');
+    }, 5000);
 
     try {
       const authServerUrl = process.env.NEXT_PUBLIC_AUTH_SERVER_URL || 'http://localhost:4000';
@@ -23,6 +29,8 @@ export default function AdminLoginPage() {
         credentials: 'include',
         body: JSON.stringify({ username, password }),
       });
+      
+      clearTimeout(wakeupTimeout);
 
       const data = await res.json();
 
@@ -36,10 +44,16 @@ export default function AdminLoginPage() {
       sessionStorage.setItem('adminUsername', data.admin.username);
 
       router.push('/admin/dashboard');
-    } catch {
-      setError('שגיאה בהתחברות לשרת ההזדהות');
+    } catch (err) {
+      clearTimeout(wakeupTimeout);
+      if (err instanceof TypeError) {
+        setError('שגיאת רשת: לא ניתן להתחבר לשרת. בדוק את החיבור לאינטרנט או הגדרות CORS.');
+      } else {
+        setError('שגיאה לא צפויה בהתחברות לשרת ההזדהות');
+      }
     } finally {
       setLoading(false);
+      setWarning('');
     }
   };
 
@@ -93,6 +107,14 @@ export default function AdminLoginPage() {
             <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
               <p className="text-sm text-red-300 flex items-center gap-2">
                 ❌ {error}
+              </p>
+            </div>
+          )}
+
+          {warning && !error && (
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <p className="text-sm text-amber-300 flex items-center gap-2 animate-pulse">
+                ⏳ {warning}
               </p>
             </div>
           )}
