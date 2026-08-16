@@ -30,6 +30,13 @@ export async function GET(req: NextRequest) {
     });
   } catch (err) {
     console.error('GET /api/volunteers error:', err);
+    const errorMessage = err instanceof Error ? err.message.toLowerCase() : String(err).toLowerCase();
+    if (errorMessage.includes('timeout') || errorMessage.includes('econnrefused') || errorMessage.includes('enotfound') || errorMessage.includes('connection')) {
+      return NextResponse.json(
+        { error: 'Database is currently waking up, please try again in a minute' },
+        { status: 503 }
+      );
+    }
     return NextResponse.json({ error: 'שגיאת שרת פנימית' }, { status: 500 });
   }
 }
@@ -96,6 +103,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ volunteer, message: 'נרשמת בהצלחה! תודה שהצטרפת' }, { status: 201 });
   } catch (err) {
     console.error('POST /api/volunteers error:', err);
+    const errorMessage = err instanceof Error ? err.message.toLowerCase() : String(err).toLowerCase();
+    if (errorMessage.includes('timeout') || errorMessage.includes('econnrefused') || errorMessage.includes('enotfound') || errorMessage.includes('connection')) {
+      return NextResponse.json(
+        { error: 'Database is currently waking up, please try again in a minute' },
+        { status: 503 }
+      );
+    }
     return NextResponse.json({ error: 'שגיאת שרת פנימית' }, { status: 500 });
   }
 }

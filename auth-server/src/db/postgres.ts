@@ -6,7 +6,9 @@ const pool = new Pool({
   connectionString: config.databaseUrl,
   max: 10,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+  connectionTimeoutMillis: 5000, // DB Wakeup allowance
+  statement_timeout: 5000,       // Cancel queries taking longer than 5s
+  query_timeout: 5000,           // Cancel queries waiting longer than 5s
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
 });
 

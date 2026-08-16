@@ -5,3 +5,6 @@ dist/
 .env.local
 .next/
 *.log
+# Study Materials
+DEFENSE_GUIDE.md
+DEFENSE_GUIDE.html
