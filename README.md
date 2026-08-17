@@ -36,7 +36,7 @@ cd auth-server
 npm install
 npm run dev
 ```
-השרת מאתחל את טבלאות PostgreSQL ויוצר את משתמש המנהל (`micha`/`1234`) אוטומטית.
+השרת מאתחל את טבלאות PostgreSQL ויוצר את משתמש המנהל.
 
 ### 3. הרצת אפליקציית הווב
 ```bash
